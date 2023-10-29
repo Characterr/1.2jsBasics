@@ -1,0 +1,29 @@
+body{
+    background: #3e3d3d;
+}
+h1{
+    text-align: center;
+}
+.wrapper{
+    border: 2px solid #000;
+    height: 200px;
+}
+
+/*######################### 1 ############################## */
+.task1 div, .square{
+    width: 100px;
+    height: 100px !important;
+    background: #000;
+    margin: 10px;
+}
+.hidden{
+    visibility: hidden;
+}
+/*######################### 3 ############################## */
+.task3{
+    display: flex;
+} 
+
+.task5 div{   
+    background: yellow;
+}
