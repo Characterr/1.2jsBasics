@@ -1,23 +1,7 @@
 "use strict"
-function getElements(classBlock, teg) {
-  return document.getElementsByClassName(classBlock)[0].getElementsByTagName(teg);
-}
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+// function getElements(classBlock, teg) {
+//   return document.getElementsByClassName(classBlock)[0].getElementsByTagName(teg);
+// }
 
 /* скриває один або колекцію елементів*/
 function visibilitySwitch(elements) {
