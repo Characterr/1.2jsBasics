@@ -6,24 +6,34 @@ h1{
 }
 .wrapper{
     border: 2px solid #000;
-    height: 200px;
+    height: 150px;
+    overflow: hidden;
 }
-
-/*######################### 1 ############################## */
-.task1 div, .square{
-    width: 100px;
-    height: 100px !important;
-    background: #000;
-    margin: 10px;
+button, input{   
+    display: block;
+    margin: 5px;
 }
 .hidden{
     visibility: hidden;
 }
-/*######################### 3 ############################## */
-.task3{
-    display: flex;
-} 
 
-.task5 div{   
-    background: yellow;
+
+/*######################### 1 ############################## */
+
+.task1 button{
+    display: inline-block;
 }
+/*######################### 3 ############################## */
+.task3 {
+    display: flex;
+    align-items: center;
+}
+/*######################### 9 ############################## */
+.task9 {
+    height: auto;
+}
+
+
+
+
+
