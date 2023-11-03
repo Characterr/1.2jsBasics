@@ -57,8 +57,11 @@ function createAndAddElement(parentSelector, tag, inscription, width, height, ba
 }
 
 function setCss(elem, propertys) {
+  let attributes=["src","value","type"];
+  
+
   Object.keys(propertys).forEach(key => {
-    if (key == "src") {
+    if (attributes.includes(key)) {
       elem.src = propertys[key];
     } else {
       elem.style[key] = propertys[key];
@@ -268,5 +271,26 @@ function runTask16() {
 }
 runTask16();
 
+/*############################ task17 ##########################################*/
+function runTask17() {
+  //<form><input type="submit" value="GO"></form>
+
+  let form=createAndAddElement(".task17", "form","","auto","auto","",["id","form"]);
+  // let attributes={
+  //   type: "submit",
+  //   value: "GO",
+  // };
+  // setCss(form,attributes);
+
+  console.log(form) ;
+
+
+
+ let input=createAndAddElement("#form", "input");
+
+
+
+}
+runTask17();
 
 
