@@ -57,12 +57,12 @@ function createAndAddElement(parentSelector, tag, inscription, width, height, ba
 }
 
 function setCss(elem, propertys) {
-  let attributes=["src","value","type"];
-  
+  let attributes = ["src", "value", "type"];
 
   Object.keys(propertys).forEach(key => {
     if (attributes.includes(key)) {
-      elem.src = propertys[key];
+
+      elem[key] = propertys[key];
     } else {
       elem.style[key] = propertys[key];
     }
@@ -246,7 +246,7 @@ runTask15();
 
 /*############################ task16 ##########################################*/
 function runTask16() {
-  let button=createAndAddElement(".task16", "button", "show square");
+  let button = createAndAddElement(".task16", "button", "show square");
   let square = createAndAddElement("body", "div", "", 0, 0, "grey");
   let properties = {
     position: "fixed",
@@ -259,38 +259,99 @@ function runTask16() {
   };
   setCss(square, properties);
 
-  button.addEventListener("click",(e)=>{
-    document.documentElement.style.overflow="hidden";
+  button.addEventListener("click", (e) => {
+    document.documentElement.style.overflow = "hidden";
     showElement(square);
   });
 
-  square.addEventListener("click",()=>{
-    document.documentElement.style.overflow="auto";
-    hideElement(square,"none");
+  square.addEventListener("click", () => {
+    document.documentElement.style.overflow = "auto";
+    hideElement(square, "none");
   });
 }
 runTask16();
 
 /*############################ task17 ##########################################*/
 function runTask17() {
-  //<form><input type="submit" value="GO"></form>
+  let form = createAndAddElement(".task17", "form", "", "auto", "auto", "", ["id", "form"]);
+  let input = createAndAddElement("#form", "input");
+  let attributes = {
+    type: "submit",
+    value: "GO",
+  };
+  setCss(input, attributes);
 
-  let form=createAndAddElement(".task17", "form","","auto","auto","",["id","form"]);
-  // let attributes={
-  //   type: "submit",
-  //   value: "GO",
-  // };
-  // setCss(form,attributes);
-
-  console.log(form) ;
-
-
-
- let input=createAndAddElement("#form", "input");
-
-
-
+  input.addEventListener("click", (e) => {
+    e.preventDefault();
+  });
 }
 runTask17();
+
+/*############################ task18 ##########################################*/
+function runTask18() {
+  let block = createAndAddElement(".task18", "div", "", 250, 60, "#333", ["class", "block"]);
+  setCss(block, {
+    position: "relative",
+    border: "1px solid green",
+  });
+
+  let text = createAndAddElement(".block", "div", "Add file");
+  setCss(text, {
+    position: "absolute",
+    bottom: 0,
+    left: 0,
+    top: 0,
+    right: 0,
+    display: "flex",
+    justifyContent: "center",
+    alignItems: "center",
+  });
+
+  let input = createAndAddElement(".block", "input");
+  setCss(input, {
+    type: "file",
+    display: "block",
+    margin: 0,
+    position: "absolute",
+    bottom: 0,
+    left: 0,
+    top: 0,
+    right: 0,
+    zIndex: 5,
+    opacity: 0,
+  });
+
+  document.addEventListener("dragenter", documentDrag);
+  function documentDrag(e) {
+    setCss(block, {
+      display: "flex",
+      justifyContent: "center",
+      alignItems: "center",
+      animationName: "animation-Block",
+      animationDuration: "0.9s",
+      animationIterationCount: "infinite",
+    });
+    input.style.opacity = 0;
+    text.innerHTML = "Put the file here!";
+  }
+
+  input.addEventListener("change",()=>{
+    block.style.animationName = "none";
+    let fileName = getFileName(input.value);
+    text.innerHTML = `${fileName} is selected &#9745`;
+  });
+
+  function getFileName(value) {
+    return value.slice(value.lastIndexOf("\\") + 1);
+  }
+}
+runTask18();
+
+
+
+
+
+
+
 
 

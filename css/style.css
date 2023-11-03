@@ -1,37 +1,60 @@
-body{
+body {
     background: #3e3d3d;
+
+    padding-bottom: 50px;
 }
-h1{
+
+h1 {
     text-align: center;
 }
-.wrapper{
+
+.wrapper {
     border: 2px solid #000;
     height: 150px;
     overflow: hidden;
 }
-button, input{   
+
+button,
+input {
     display: block;
     margin: 5px;
 }
-.hidden{
+
+.hidden {
     visibility: hidden;
 }
 
 
 /*######################### 1 ############################## */
 
-.task1 button{
+.task1 button {
     display: inline-block;
 }
+
 /*######################### 3 ############################## */
 .task3 {
     display: flex;
     align-items: center;
 }
+
 /*######################### 9 ############################## */
 .task9 {
     height: auto;
 }
 
+/*######################### 18 ############################## */
+@keyframes animation-Block {
+    0% {
+        box-shadow: 20px 20px 50px 15px yellow;
+    }
+    100% {
+        letter-spacing: 1px;
+        color: rgb(227, 243, 227);
+        font-size: 1.2em;
+        box-shadow: 20px 20px 50px 15px red;
+        color: red;
+        background: #f3e050;
+    }
+}
 
 
