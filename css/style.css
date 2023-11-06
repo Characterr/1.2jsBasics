@@ -1,6 +1,5 @@
 body {
     background: #3e3d3d;
-
     padding-bottom: 50px;
 }
 
@@ -24,29 +23,25 @@ input {
     visibility: hidden;
 }
 
-
-/*######################### 1 ############################## */
-
 .task1 button {
     display: inline-block;
 }
 
-/*######################### 3 ############################## */
 .task3 {
     display: flex;
     align-items: center;
 }
 
-/*######################### 9 ############################## */
-.task9 {
+.task9,
+.task13 {
     height: auto;
 }
 
-/*######################### 18 ############################## */
 @keyframes animation-Block {
     0% {
         box-shadow: 20px 20px 50px 15px yellow;
     }
+
     100% {
         letter-spacing: 1px;
         color: rgb(227, 243, 227);
@@ -56,5 +51,3 @@ input {
         background: #f3e050;
     }
 }
-
-
