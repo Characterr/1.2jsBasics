@@ -1,6 +1,10 @@
 "use strict"
 
-/* Toggles the visibility of one or a collection of elements */
+/**
+ *Toggles the visibility of one or a collection of elements
+ *
+ * @param {*} elements an element or group of elements whose visibility is toggled
+ */
 function visibilitySwitch(elements) {
   if (Number.isInteger(elements.length)) {
     for (let i = 0; i < elements.length; i++) {
@@ -11,7 +15,13 @@ function visibilitySwitch(elements) {
   }
 }
 
-/* Hides an element in one of the ways: display:none, visibility: hidden, elem.remove */
+
+/**
+ *Hides an element in one of the ways: display:none, visibility: hidden, elem.remove 
+ *
+ * @param {*} elem hidden element
+ * @param {*} way way to hide an element
+ */
 function hideElement(elem, way) {
   switch (way) {
     case "none": elem.style.display = "none"; break;
@@ -20,21 +30,29 @@ function hideElement(elem, way) {
   }
 }
 
-/* Shows a hidden element or creates one if it doesn't exist */
+/**
+ *Shows a hidden element or creates one if it doesn't exist
+ *
+ * @param {*} elem element to be displayed
+ * @param {*} parentElem the parent block to which the element is added
+ */
 function showElement(elem, parentElem) {
   elem.removeAttribute("class", "hidden");
   elem.style.display = "block";
-  parentElem.appendChild(elem);
+  if(parentElem) parentElem.appendChild(elem);
 }
 
-/* Сreates an HTML element with parameters:
-parentSelector - selector of the parent element
-tag - tag of the element being created
-inscription - content in the middle of the element
-width - element width
-height - element height
-background - background of this element
-attribute - array containing an element attribute and its value
+/**
+ *Сreates an HTML element with parameters and add him
+ *
+ * @param {*} parentSelector selector of the parent element
+ * @param {*} tag tag of the element being created
+ * @param {*} inscription content in the middle of the element
+ * @param {*} width element width
+ * @param {*} height element height
+ * @param {*} background background of this element
+ * @param {*} attribute array containing an element attribute and its value
+ * @return {*} element that was created and added
  */
 function createAndAddElement(parentSelector, tag, inscription, width, height, background, attribute) {
   let parent = document.querySelectorAll(parentSelector)[0];
@@ -56,12 +74,17 @@ function createAndAddElement(parentSelector, tag, inscription, width, height, ba
   return elem;
 }
 
-/* Set attributes and properties of the element */
+/**
+ * Set attributes and properties of the element
+ *
+ * @param {*} elem an element to which properties are set
+ * @param {*} propertys object with properties
+ */
 function setCss(elem, propertys) {
-  let attributes = ["src", "value", "type", "contentEditable"];
+  const ATTRIBUTES = ["src", "value", "type", "contentEditable"];
 
   Object.keys(propertys).forEach(key => {
-    if (attributes.includes(key)) {
+    if (ATTRIBUTES.includes(key)) {
       elem[key] = propertys[key];
     } else {
       elem.style[key] = propertys[key];
@@ -71,20 +94,22 @@ function setCss(elem, propertys) {
 
 /********************************* task1 **********************************/
 function runTask1() {
-  let buttons = [];
-  let nameButtons = ["display none", "delete", "hidden", "to show"];
+  const BUTTONS = [];
+  const NAMEBUTTONS = ["display none", "delete", "hidden", "to show"];
+  let idBlock="square";
 
-  for (let i = 0; i < nameButtons.length; i++) {
-    buttons[i] = createAndAddElement(".task1", "button", nameButtons[i]);
+  for (let i = 0; i < NAMEBUTTONS.length; i++) {
+    BUTTONS[i] = createAndAddElement(".task1", "button", NAMEBUTTONS[i]);
   }
 
-  let square = createAndAddElement(".task1", "div", "", 100, 100, "#000");
+  createAndAddElement(".task1", "div", "", 100, 100, "#000",["id",idBlock]);
+  let square = document.getElementById(idBlock);
   let parentElem = square.parentElement;
-  let ways = ["none", "removeChild", "class"];
+  const WAYS = ["none", "removeChild", "class"];
 
-  for (let i = 0; i < buttons.length; i++) {
-    let callbackFun = (i == buttons.length - 1) ? () => showElement(square, parentElem) : () => hideElement(square, ways[i]);
-    buttons[i].addEventListener("click", callbackFun);
+  for (let i = 0; i < BUTTONS.length; i++) {
+    let callbackFun = (i == BUTTONS.length - 1) ? () => showElement(square, parentElem) : () => hideElement(square, WAYS[i]);
+    BUTTONS[i].addEventListener("click", callbackFun);
   }
 }
 runTask1();
@@ -205,21 +230,23 @@ function runTask10() {
     position: "fixed",
     right: 0,
     top: 0,
-    padding: "5px",
+    padding: "5px"
   });
 
   let coordinates = createAndAddElement(".pageInfo", "div", "", "100%");
   setCss(coordinates, {
-    margin: 0,
+    margin: 0
   });
 
   let coords = navigator.geolocation.getCurrentPosition((pos) => {
     let latitude = pos.coords.latitude;
     let longitude = pos.coords.longitude;
+    let lang = document.documentElement.lang;
 
-    block.innerHTML = "Ш: " + latitude + ", " +
-      "Д: " + longitude +
-      "<br>lang: " + document.documentElement.lang;
+    block.innerHTML = `Ш: ${latitude},
+      Д: ${longitude}<br> 
+      lang: ${lang}`;
+
     block.appendChild(coordinates);
     block.style.display = "block";
   });
@@ -239,12 +266,14 @@ function runTask13() {
   let startText = "start text in block";
   /* the time in seconds that the data is stored in the cookie */
   let timerCookiis = 15;
+  /* the name under which the data is stored and then retrieved */
+  let idSaveText = "saveText";
 
   /* an object with the functions of storing the entered text */
-  let functionsClickBlocks = {
+  const FUNCTIONS_CLICK_BLOCKS = { 
     saveByLocalStorage: (e) => {
       let text = e.target.innerHTML;
-      window.localStorage.setItem("saveText", text);
+      window.localStorage.setItem(idSaveText, text);
     },
     saveByCookies: (e) => {
       let text = e.target.innerHTML;
@@ -252,38 +281,38 @@ function runTask13() {
     },
     saveBySessionStorage: (e) => {
       let text = e.target.innerHTML;
-      window.sessionStorage.setItem("saveText", text);
+      window.sessionStorage.setItem(idSaveText, text);
     }
   }
 
   /* an object with the functions of reading stored text */
-  let storage = {
-    textLocalStorage: () => { return window.localStorage.getItem("saveText") },
+  const STORAGE = {
+    textLocalStorage: () => { return window.localStorage.getItem(idSaveText) },
     textCocie: () => { return (document.cookie.length == 0) ? startText : document.cookie },
-    textSesionStorage: () => { return window.sessionStorage.getItem("saveText") }
+    textSesionStorage: () => { return window.sessionStorage.getItem(idSaveText) }
   };
 
   /* filling blocks with text */
   window.addEventListener("load", () => {
     let i = 0;
-    for (let key in storage) {
-      let textStorage = storage[key]();
+    for (let key in STORAGE) {
+      let textStorage = STORAGE[key]();
       textStorage ??= startText;
-      blocks[i++].innerHTML = textStorage;
+      BLOCKS[i++].innerHTML = textStorage;
     }
   });
 
-  let blocks = [];
+  const BLOCKS = [];
   let numberBlocks = 3;
 
-  let functions = Object.values(functionsClickBlocks);
+  let functions = Object.values(FUNCTIONS_CLICK_BLOCKS);
   for (let i = 0; i < numberBlocks; i++) {
     let block = createAndAddElement(".task13", "div", startText);
-    blocks.push(block);
+    BLOCKS.push(block);
     setCss(block, {
       border: "1px solid #000",
       minHeight: "50px",
-      contentEditable: true,
+      contentEditable: true
     });
 
     block.addEventListener("input", (e) => functions[i](e));
@@ -299,7 +328,7 @@ function runTask14() {
     right: 0,
     bottom: 0,
     opacity: 0.8,
-    display: "none",
+    display: "none"
   });
 
   document.addEventListener("scroll", (e) => {
@@ -309,7 +338,7 @@ function runTask14() {
     hideElement(disappearingButton, "none");
 
     if (visibleArea + currentScroll >= maxHeight) {
-      showElement(disappearingButton, "none");
+      showElement(disappearingButton);
     }
   });
 
@@ -329,7 +358,7 @@ function runTask15() {
   setCss(bigBlock, {
     "display": "flex",
     "justify-content": "center",
-    "align-items": "center",
+    "align-items": "center"
   });
 
   bigBlock.addEventListener("click", (e) => {
@@ -351,7 +380,7 @@ function runTask16() {
     width: "100%",
     height: "100%",
     opacity: "0.5",
-    display: "none",
+    display: "none"
   });
 
   button.addEventListener("click", (e) => {
@@ -372,7 +401,7 @@ function runTask17() {
   let input = createAndAddElement("#form", "input");
   setCss(input, {
     type: "submit",
-    value: "GO",
+    value: "GO"
   });
 
   input.addEventListener("click", (e) => {
@@ -386,7 +415,7 @@ function runTask18() {
   let block = createAndAddElement(".task18", "div", "", 250, 60, "#333", ["class", "block"]);
   setCss(block, {
     position: "relative",
-    border: "1px solid green",
+    border: "1px solid green"
   });
 
   let text = createAndAddElement(".block", "div", "Add file");
@@ -398,7 +427,7 @@ function runTask18() {
     right: 0,
     display: "flex",
     justifyContent: "center",
-    alignItems: "center",
+    alignItems: "center"
   });
 
   let input = createAndAddElement(".block", "input");
@@ -412,7 +441,7 @@ function runTask18() {
     top: 0,
     right: 0,
     zIndex: 5,
-    opacity: 0,
+    opacity: 0
   });
 
   document.addEventListener("dragenter", documentDrag);
@@ -423,7 +452,7 @@ function runTask18() {
       alignItems: "center",
       animationName: "animation-Block",
       animationDuration: "0.9s",
-      animationIterationCount: "infinite",
+      animationIterationCount: "infinite"
     });
     input.style.opacity = 0;
     text.innerHTML = "Put the file here!";
@@ -440,3 +469,24 @@ function runTask18() {
   }
 }
 runTask18();
+
+/********************************* TopCities **********************************/
+import getTopCities from "../js/task2.js";
+function runTopCities(){
+let CSV = `48.30,32.16,Кропивницький,200000,
+
+49.46,30.17,Біла Церква,10131,
+44.38,34.33,Алушта,940,
+49.54,28.49,Бердичів,87575,#некоммент
+#
+46.49,36.58,#Бердянськ,121692,
+49.15,28.41,Вінниця,356665,
+
+#45.40,34.29,Джанкой,43343,
+# в цьому файлі три рядки-коментаря :)`;
+let str = "Бердичів word Алушта word  Вінниця word word word word Біла Церква";
+
+let replaceCityNames = getTopCities(CSV);
+console.log(replaceCityNames(str));
+}
+runTopCities();
