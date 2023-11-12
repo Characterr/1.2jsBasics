@@ -26,7 +26,8 @@ function getTopCities(CSV) {
     /* replacement in the line of city names with a line of information about this city */
     return (str) => {
         Object.keys(topCities).map(city => {
-            str = str.replace(city, `${city} (${topCities[city].rating} місце в ТОП-10 найбільших міст України, населення ${topCities[city].population} людей)`);
+            let reg= new RegExp( city , 'gi');
+            str = str.replace(reg, `${city} (${topCities[city].rating} місце в ТОП-10 найбільших міст України, населення ${topCities[city].population} людей)`);
         })
         return str;
     }
